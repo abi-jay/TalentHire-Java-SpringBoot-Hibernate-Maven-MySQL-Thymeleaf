@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -14,8 +13,8 @@ public class TalentDto {
     private String name;
     private String introduction;
     private String talent;
-    private String location;
+    private Integer location;
     private String email;
-    private LocalDateTime memberSince;
+    private LocalDate memberSince;
     private BigDecimal rate;
 }
