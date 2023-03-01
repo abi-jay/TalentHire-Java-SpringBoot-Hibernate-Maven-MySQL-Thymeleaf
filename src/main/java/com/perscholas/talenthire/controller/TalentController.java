@@ -5,6 +5,8 @@ import com.perscholas.talenthire.service.TalentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -25,4 +27,20 @@ public class TalentController {
         model.addAttribute("talents", talents);
         return "/talent/myclients";
     }
+    // Handler method to handle new Client HTTP request
+    @GetMapping("/talent/clients/newclient")
+    public String newClientForm(Model model){
+        TalentDto talentDto = new TalentDto();
+        model.addAttribute("talent",talentDto);
+        return "talent/new_client";
+    }
+    // Handler method to handle form submit POST request
+    // ModelAttribute annotation will read data from form and set the values to the fields of model object
+    @PostMapping("/talent/myclients")
+    public String createClient(@ModelAttribute TalentDto talentDto){
+        talentService.createClient(talentDto);
+        return "redirect:/talent/myclients";
+    }
+
+
 }

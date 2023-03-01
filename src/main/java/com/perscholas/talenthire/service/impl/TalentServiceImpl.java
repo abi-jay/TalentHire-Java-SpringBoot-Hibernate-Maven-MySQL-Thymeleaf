@@ -27,4 +27,11 @@ public class TalentServiceImpl implements TalentService {
         return talents.stream().map(TalentMapper::mapToTalentDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void createClient(TalentDto talentDto) {
+        // create talent JPA entity
+        Talent talent = TalentMapper.mapToTalent(talentDto);
+        talentRepository.save(talent);
+    }
 }
