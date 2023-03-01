@@ -4,10 +4,12 @@ import com.perscholas.talenthire.dto.TalentDto;
 import com.perscholas.talenthire.service.TalentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -36,8 +38,16 @@ public class TalentController {
     }
     // Handler method to handle form submit POST request
     // ModelAttribute annotation will read data from form and set the values to the fields of model object
+    // Binding result class is used to check the error and return to the view
     @PostMapping("/talent/myclients")
-    public String createClient(@ModelAttribute TalentDto talentDto){
+    public String createClient(@Valid @ModelAttribute("talent") TalentDto talentDto,
+                               BindingResult result,
+                               Model model){
+        if(result.hasErrors()){
+            // return to the calling page, newclient
+            model.addAttribute("talent", talentDto);
+            return ("talent/new_client");
+        }
         talentService.createClient(talentDto);
         return "redirect:/talent/myclients";
     }

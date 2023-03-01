@@ -16,6 +16,7 @@
                 <h2 class="text-center"> New client details</h2>
             </div>
             <div class="card-body">
+                <!-- talentDto is the Java Bean, hence add validation to talentDto java bean class -->
                 <form role="form" method="post" th:action="@{/talent/myclients}" th:object="${talent}">
                     <div class="mb-3">
                         <label class="form-label"> Name </label>
@@ -26,6 +27,9 @@
                                 placeholder="Enter Client Name"
                                 th:field="*{name}"
                         />
+                        <p th:if="${#fields.hasErrors('name')}" class="text-danger"
+                           th:errors="*{name}">
+                        </p>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Location</label>
@@ -36,6 +40,9 @@
                                 placeholder="Enter Client Location"
                                 th:field="*{location}"
                         />
+                        <p th:if="${#fields.hasErrors('location')}" class="text-danger"
+                           th:errors="*{location}">
+                        </p>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Client</label>
@@ -47,6 +54,9 @@
                                   th:field="*{introduction}"
                         >
                         </textarea>
+                        <p th:if="${#fields.hasErrors('introduction')}" class="text-danger"
+                           th:errors="*{introduction}">
+                        </p>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">My Talent</label>
@@ -57,6 +67,9 @@
                                 placeholder="Enter Talent requested by Client"
                                 th:field="*{talent}"
                         />
+                        <p th:if="${#fields.hasErrors('talent')}" class="text-danger"
+                           th:errors="*{talent}">
+                        </p>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Hourly Pay</label>
@@ -67,6 +80,7 @@
                                 placeholder="Enter the hourly charge"
                                 th:field="*{rate}"
                         />
+
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email</label>
@@ -77,6 +91,9 @@
                                 placeholder="Enter Client Email"
                                 th:field="*{email}"
                         />
+                        <p th:if="${#fields.hasErrors('email')}" class="text-danger"
+                           th:errors="*{email}">
+                        </p>
                     </div>
                     <button type="submit" class="btn btn-primary">Add</button>
                     <input
