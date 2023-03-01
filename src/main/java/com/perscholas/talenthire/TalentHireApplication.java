@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TalentHireApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(TalentHireApplication.class, args);
 	}
 

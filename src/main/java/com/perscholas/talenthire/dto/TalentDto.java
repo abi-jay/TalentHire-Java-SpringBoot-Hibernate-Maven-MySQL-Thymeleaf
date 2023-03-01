@@ -13,7 +13,7 @@ public class TalentDto {
     private String name;
     private String introduction;
     private String talent;
-    private Integer location;
+    private String location;
     private String email;
     private LocalDate memberSince;
     private BigDecimal rate;

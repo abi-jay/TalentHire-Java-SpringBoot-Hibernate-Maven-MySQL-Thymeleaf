@@ -30,7 +30,7 @@ public class Talent {
     @Column(name = "talent")
     @NotNull(message = "Enter your talent")
     private String talent;
-    private Integer location;
+    private String location;
     private String email;
 
     @CreationTimestamp
