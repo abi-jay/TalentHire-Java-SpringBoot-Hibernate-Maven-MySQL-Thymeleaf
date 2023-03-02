@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Edit the Client</title>
+</head>
+<div th:replace="fragments/header :: header"></div>
+<body>
+<div th:replace="fragments/header :: navbar"></div>
+<div class="container" style="margin-top:50px; margin-bottom:80px;">
+  <div class="row col-md-8 offset-md-2">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="text-center"> Edit client details</h2>
+      </div>
+      <div class="card-body">
+        <!-- talentDto is the Java Bean, hence add validation to talentDto java bean class - client is the talentdto object here-->
+        <form role="form" method="post" th:action="@{/talent/myclients/{clientId}(clientId=${client.id})}" th:object="${client}">
+         <div class="mb-3">
+            <label class="form-label"> Name </label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    placeholder="Enter Client Name"
+                    th:field="*{name}"
+            />
+            <p th:if="${#fields.hasErrors('name')}" class="text-danger"
+               th:errors="*{name}">
+            </p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Location</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="location"
+                    placeholder="Enter Client Location"
+                    th:field="*{location}"
+            />
+            <p th:if="${#fields.hasErrors('location')}" class="text-danger"
+               th:errors="*{location}">
+            </p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Client</label>
+            <textarea class="form-control"
+                      id="about"
+                      placeholder="Enter details about Client"
+                      rows="12"
+                      name="about"
+                      th:field="*{introduction}"
+            >
+                        </textarea>
+            <p th:if="${#fields.hasErrors('introduction')}" class="text-danger"
+               th:errors="*{introduction}">
+            </p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">My Talent</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="talent"
+                    placeholder="Enter Talent requested by Client"
+                    th:field="*{talent}"
+            />
+            <p th:if="${#fields.hasErrors('talent')}" class="text-danger"
+               th:errors="*{talent}">
+            </p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Hourly Pay</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="rate"
+                    placeholder="Enter the hourly charge"
+                    th:field="*{rate}"
+            />
+
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="email"
+                    placeholder="Enter Client Email"
+                    th:field="*{email}"
+            />
+            <p th:if="${#fields.hasErrors('email')}" class="text-danger"
+               th:errors="*{email}">
+            </p>
+          </div>
+          <button type="submit" class="btn btn-info">Update</button>
+          <input
+                  type="hidden"
+                  id="memberSince"
+                  value="Date()"
+                  th:field="*{memberSince}"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
