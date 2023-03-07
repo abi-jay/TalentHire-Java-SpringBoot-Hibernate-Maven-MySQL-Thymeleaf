@@ -1,7 +1,7 @@
-package com.perscholas.talenthire.controller;
+package org.abijay.talenthire.controller;
 
-import com.perscholas.talenthire.dto.TalentDto;
-import com.perscholas.talenthire.service.TalentService;
+import org.abijay.talenthire.dto.TalentDto;
+import org.abijay.talenthire.service.TalentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,6 +44,7 @@ public class TalentController {
     public String createClient(@Valid @ModelAttribute("talent") TalentDto talentDto,
                                BindingResult result,
                                Model model) {
+        talentDto.setUrl(getUrl(talentDto.getTalent()));
         if (result.hasErrors()) {
             // return to the same calling page, newclient in case of error in validation
             model.addAttribute("talent", talentDto);
@@ -88,15 +89,56 @@ public class TalentController {
         return "redirect:/talent/myclients";
     }
 
+    // Handler method to handle view talent request
+    @GetMapping("/talent/myclients/{talentUrl}/view")
+    public String viewTalent(@PathVariable("talentUrl") String talentUrl,
+                             Model model){
+        TalentDto talentDto = talentService.findTalentByUrl(talentUrl);
+        model.addAttribute("talent", talentDto);
+        return "talent/view_talent";
+    }
+
     // Handler method to handle search clients request
     // url - localhost:8080/talent/myclients/search?query=Sirius
     // RequestParam annotation to retrieve value from the Query parameter
-    @GetMapping("/talent/myclients/search")
-    public String searchClients(@RequestParam(value = "query") String query,
-                                Model model){
-        List<TalentDto> talents = talentService.searchClients(query);
+    // Handler method to handle search clients request
+    // url - localhost:8080/talent/myclients/searchbyname?query=Sirius
+    // RequestParam annotation to retrieve value from the Query parameter
+    @GetMapping("/talent/myclients/searchbyname")
+    public String searchClientsByName(@RequestParam(value = "query") String query,
+                                      Model model){
+        List<TalentDto> talents = talentService.searchClientsByName(query);
         // pass the talentdto object to model
         model.addAttribute("talents",talents);
         return "talent/myclients";
     }
+    @GetMapping("/talent/myclients/searchbylocation")
+    public String searchClientsByLocation(@RequestParam(value = "query") String query,
+                                          Model model){
+        List<TalentDto> talents = talentService.searchClientsByLocation(query);
+        // pass the talentdto object to model
+        model.addAttribute("talents",talents);
+        return "talent/myclients";
+    }
+    @GetMapping("/talent/myclients/searchbytalent")
+    public String searchClientsByTalent(@RequestParam(value = "query") String query,
+                                        Model model){
+        List<TalentDto> talents = talentService.searchClientsByTalent(query);
+        // pass the talentdto object to model
+        model.addAttribute("talents",talents);
+        return "talent/myclients";
+    }
+
+    private static String getUrl(String talentTitle){
+        // private-guitar-lessons
+        // Private Guitar lessons
+        String title = talentTitle.toLowerCase();
+        // replace space with hyphen
+        String url = title.replaceAll("\\s+", "-");
+        // replace symbol with hyphen
+        url = url.replaceAll("[^A-Za-z0-9]", "-");
+        return url;
+
+    }
 }
+

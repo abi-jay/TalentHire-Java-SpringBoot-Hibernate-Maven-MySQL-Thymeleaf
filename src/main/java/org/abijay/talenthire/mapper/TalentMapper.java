@@ -1,7 +1,7 @@
-package com.perscholas.talenthire.mapper;
+package org.abijay.talenthire.mapper;
 
-import com.perscholas.talenthire.dto.TalentDto;
-import com.perscholas.talenthire.entity.Talent;
+import org.abijay.talenthire.dto.TalentDto;
+import org.abijay.talenthire.entity.Talent;
 
 public class TalentMapper {
 
@@ -11,6 +11,7 @@ public class TalentMapper {
                 .id(talent.getId())
                 .talent(talent.getTalent())
                 .email(talent.getEmail())
+                .url(talent.getUrl())
                 .name(talent.getName())
                 .location(talent.getLocation())
                 .introduction(talent.getIntroduction())
@@ -25,6 +26,7 @@ public class TalentMapper {
                 .id(talentDto.getId())
                 .talent(talentDto.getTalent())
                 .email(talentDto.getEmail())
+                .url(talentDto.getUrl())
                 .name(talentDto.getName())
                 .location(talentDto.getLocation())
                 .introduction(talentDto.getIntroduction())

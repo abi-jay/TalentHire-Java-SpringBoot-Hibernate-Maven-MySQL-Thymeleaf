@@ -1,10 +1,10 @@
-package com.perscholas.talenthire.service.impl;
+package org.abijay.talenthire.service.impl;
 
-import com.perscholas.talenthire.dto.TalentDto;
-import com.perscholas.talenthire.entity.Talent;
-import com.perscholas.talenthire.mapper.TalentMapper;
-import com.perscholas.talenthire.repository.TalentRepository;
-import com.perscholas.talenthire.service.TalentService;
+import org.abijay.talenthire.dto.TalentDto;
+import org.abijay.talenthire.entity.Talent;
+import org.abijay.talenthire.mapper.TalentMapper;
+import org.abijay.talenthire.repository.TalentRepository;
+import org.abijay.talenthire.service.TalentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,15 +53,49 @@ public class TalentServiceImpl implements TalentService {
 
     @Override
     public void deleteClient(Long clientId) {
+
         talentRepository.deleteById(clientId);
     }
 
     @Override
-    public List<TalentDto> searchClients(String query) {
-        List<Talent> talents = talentRepository.searchClients(query);
+    public TalentDto findTalentByUrl(String talentUrl) {
+        Talent talent = talentRepository.findByUrl(talentUrl).get();
+        return TalentMapper.mapToTalentDto(talent);
+    }
+
+    @Override
+    public List<TalentDto> searchTalents(String query) {
+        List<Talent> talents = talentRepository.searchTalents(query);
+        System.out.println("Talents: "+ talents);
+        return talents.stream()
+                .map(TalentMapper::mapToTalentDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TalentDto> searchClientsByName(String query) {
+        List<Talent> talents = talentRepository.searchClientsByName(query);
         // convert list of talent entities to talent dto
         return talents.stream()
                 .map(TalentMapper::mapToTalentDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<TalentDto> searchClientsByLocation(String query) {
+        List<Talent> talents = talentRepository.searchClientsByLocation(query);
+        return talents.stream()
+                .map(TalentMapper::mapToTalentDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TalentDto> searchClientsByTalent(String query) {
+        List<Talent> talents = talentRepository.searchClientsByTalent(query);
+        return talents.stream()
+                .map(TalentMapper::mapToTalentDto)
+                .collect(Collectors.toList());
+    }
+
+
 }

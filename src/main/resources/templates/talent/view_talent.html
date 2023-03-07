@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="fragments/header :: header"></div>
+<body>
+<div th:replace="talent/navbar :: navbar"></div>
+<br/><br/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 ">
+            <h2 th:text="${talent.talent}"></h2>
+            <hr/>
+            <h3>Name:</h3>
+            <h4 th:text="${talent.name}"></h4>
+            <hr/>
+            <h3>Location:</h3>
+            <h4 th:text="${talent.location}"></h4>
+            <hr/>
+            <h3>About:</h3>
+            <h4 th:utext="${talent.introduction}"></h4>
+            <hr/>
+        </div>
+    </div>
+</div>
+<br/><br/>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

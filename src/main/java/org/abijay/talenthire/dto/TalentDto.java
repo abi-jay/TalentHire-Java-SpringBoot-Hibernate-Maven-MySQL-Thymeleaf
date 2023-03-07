@@ -1,4 +1,4 @@
-package com.perscholas.talenthire.dto;
+package org.abijay.talenthire.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +25,7 @@ public class TalentDto {
     private String location;
     @NotEmpty(message = "Email cannot be empty")
     private String email;
+    private String url;
     private LocalDate memberSince;
     private BigDecimal rate;
 }

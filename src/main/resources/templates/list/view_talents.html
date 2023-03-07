@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="fragments/header :: header"></div>
+<body>
+<div th:replace="list/navbar :: navbar"></div>
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div th:each="talent: ${talentsResponse}">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>
+                            <a th:href="@{/talent/{talentUrl}(talentUrl=${talent.url})}"
+                               th:text="${talent.talent}"></a>
+
+                        </h3>
+                        <div>
+                            <strong th:text="${#temporals.format(talent.memberSince,'dd MMM yyyy')}">
+
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span th:utext="${talent.introduction}"></span>
+                        <a th:href="@{/talent/{talentUrl}(talentUrl=${talent.url})}" > Know more!</a>
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- Search Bar -->
+            <div th:replace="list/search :: search"></div>
+        </div>
+    </div>
+</div>
+<br/><br/><br/><br/>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

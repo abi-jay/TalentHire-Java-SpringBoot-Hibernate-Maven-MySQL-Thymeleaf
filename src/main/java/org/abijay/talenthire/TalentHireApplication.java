@@ -1,4 +1,4 @@
-package com.perscholas.talenthire;
+package org.abijay.talenthire;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
