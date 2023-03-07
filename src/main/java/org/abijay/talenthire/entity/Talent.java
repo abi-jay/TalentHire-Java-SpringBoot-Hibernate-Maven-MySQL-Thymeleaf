@@ -23,7 +23,7 @@ public class Talent {
     private Long id;
 
     @Column(name = "name")
-    @NotNull(message = "Client Name can't be empty!")
+    @NotNull(message = "Name can't be empty!")
     private String name;
 
     @Lob

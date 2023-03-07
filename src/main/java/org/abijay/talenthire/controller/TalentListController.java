@@ -1,5 +1,6 @@
 package org.abijay.talenthire.controller;
 
+import org.abijay.talenthire.dto.ReviewDto;
 import org.abijay.talenthire.dto.TalentDto;
 import org.abijay.talenthire.service.TalentService;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,9 @@ public class TalentListController {
     private String showTalents(@PathVariable("talentUrl") String talentUrl,
                                Model model){
         TalentDto talentDto = talentService.findTalentByUrl(talentUrl);
+        ReviewDto reviewDto = new ReviewDto();
         model.addAttribute("talent", talentDto);
+        model.addAttribute("review", reviewDto);
         return "list/show_talent";
     }
 

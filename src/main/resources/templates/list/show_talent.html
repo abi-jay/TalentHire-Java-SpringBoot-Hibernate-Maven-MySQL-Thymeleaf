@@ -8,7 +8,7 @@
 <br/><br/>
 <div class="container">
   <div class="row">
-    <div class="col-md-9 ">
+    <div class="col-md-8">
       <h2 th:text="${talent.talent}"></h2>
       <hr/>
       <h3>Name:</h3>
@@ -20,14 +20,73 @@
       <h3>About:</h3>
       <h4 th:utext="${talent.introduction}"></h4>
       <hr/>
+      <div>
+        <h3>Reviews:</h3>
+        <div class="card">
+          <div class="card-header">
+            <h2>Leave a feedback/review</h2>
+          </div>
+          <div class="card-body">
+            <form role="form"
+                  method="post"
+                  th:action="@{/{talentUrl}/reviews(talentUrl=${talent.url})}"
+                  th:object="${review}"
+            >
+              <div class="row">
+                <div class="col-md-5 mb-3">
+                  <input class="form-control"
+                         id="name"
+                         name="name"
+                         placeholder="Enter Name"
+                         th:field="*{name}"
+                         type="text"/>
+                  <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-5 mb-3">
+                  <input class="form-control"
+                         id="email"
+                         name="email"
+                         placeholder="Enter Email"
+                         th:field="*{email}"
+                         type="text"/>
+                  <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8 mb-3">
+                    <textarea
+                            class="form-control"
+                            id="content"
+                            name="content"
+                            placeholder="Enter review"
+                            rows="8"
+                            th:field="*{content}">
+                    </textarea>
+                  <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-danger"></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-5">
+                  <button
+                          class="btn btn-primary"
+                          type="submit"> Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-md-3">
+
+    <div class="col-md-4">
       <!-- search bar goes here -->
       <div th:replace="list/search :: search"></div>
     </div>
   </div>
 </div>
-<br/><br/>
+<br/><br/><br/><br/>
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
