@@ -6,6 +6,7 @@ import org.abijay.talenthire.entity.User;
 import org.abijay.talenthire.repository.RoleRepository;
 import org.abijay.talenthire.repository.UserRepository;
 import org.abijay.talenthire.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -15,11 +16,14 @@ public class UserServiceImpl implements UserService {
     // dependency injection
     private UserRepository userRepository;
     private RoleRepository roleRepository;
+    private PasswordEncoder passwordEncoder;
     // constructor based DI
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -27,9 +31,9 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setName(registrationDto.getFirstName() + " " + registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
-        // use spring security to encrypt this password
-        user.setPassword(registrationDto.getPassword());
-        // role object with id 2 - name ROLE_GUEST
+        // using spring security to encrypt this password
+        user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
+        // default role object with id 2 - name ROLE_GUEST
         Role role = roleRepository.findByName("ROLE_GUEST");
         // Add guest role to user object
         user.setRoles(Arrays.asList(role));
