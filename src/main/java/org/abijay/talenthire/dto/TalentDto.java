@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @Builder
@@ -28,4 +29,5 @@ public class TalentDto {
     private String url;
     private LocalDate memberSince;
     private BigDecimal rate;
+    private Set<ReviewDto> reviews;
 }

@@ -9,6 +9,9 @@ import org.abijay.talenthire.repository.TalentRepository;
 import org.abijay.talenthire.service.ReviewService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ReviewServiceImpl implements ReviewService {
     // inject dependencies
@@ -27,5 +30,18 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = ReviewMapper.mapToReview(reviewDto);
         review.setTalent(talent);
         reviewRepository.save(review);
+    }
+
+    @Override
+    public List<ReviewDto> findAllReviews() {
+        List<Review> reviews = reviewRepository.findAll();
+        return reviews.stream()
+                .map(ReviewMapper::mapToReviewDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void fulfillRequest(Long requestId) {
+        reviewRepository.deleteById(requestId);
     }
 }

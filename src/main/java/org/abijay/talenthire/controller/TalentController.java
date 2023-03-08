@@ -1,6 +1,8 @@
 package org.abijay.talenthire.controller;
 
+import org.abijay.talenthire.dto.ReviewDto;
 import org.abijay.talenthire.dto.TalentDto;
+import org.abijay.talenthire.service.ReviewService;
 import org.abijay.talenthire.service.TalentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +17,13 @@ public class TalentController {
     // Interface is recommended to use for DI. Because it provides Loose coupling.
     // At run-time, able to use any implementation if we inject Interface
     private TalentService talentService;
+    private ReviewService reviewService;
     // Constructor based DI
 
-    public TalentController(TalentService talentService) {
+
+    public TalentController(TalentService talentService, ReviewService reviewService) {
         this.talentService = talentService;
+        this.reviewService = reviewService;
     }
 
     // Handler method to handle HTTP GET request and return model and view
@@ -127,6 +132,21 @@ public class TalentController {
         // pass the talentdto object to model
         model.addAttribute("talents",talents);
         return "talent/myclients";
+    }
+
+    // Handler method to handle list requests method
+    @GetMapping("/talent/myclients/requests")
+    public String talentRequests(Model model){
+        List<ReviewDto> requests = reviewService.findAllReviews();
+        model.addAttribute("requests",requests);
+        return "talent/requests";
+    }
+
+    // Handler method to handle fulfill Talent service request
+    @GetMapping("/talent/myclients/requests/{requestId}")
+    public String fulfillRequest(@PathVariable("requestId") Long requestId){
+        reviewService.fulfillRequest(requestId);
+        return  "redirect:/talent/myclients/requests";
     }
 
     private static String getUrl(String talentTitle){

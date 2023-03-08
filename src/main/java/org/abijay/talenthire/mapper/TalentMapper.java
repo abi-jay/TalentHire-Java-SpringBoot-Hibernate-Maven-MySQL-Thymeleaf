@@ -3,6 +3,8 @@ package org.abijay.talenthire.mapper;
 import org.abijay.talenthire.dto.TalentDto;
 import org.abijay.talenthire.entity.Talent;
 
+import java.util.stream.Collectors;
+
 public class TalentMapper {
 
     // Map Talent entity to TalentDto
@@ -17,6 +19,9 @@ public class TalentMapper {
                 .introduction(talent.getIntroduction())
                 .memberSince(talent.getMemberSince())
                 .rate(talent.getRate())
+                .reviews(talent.getReviews().stream()
+                        .map((review)->ReviewMapper.mapToReviewDto(review))
+                        .collect(Collectors.toSet()))
                 .build();
     }
 
