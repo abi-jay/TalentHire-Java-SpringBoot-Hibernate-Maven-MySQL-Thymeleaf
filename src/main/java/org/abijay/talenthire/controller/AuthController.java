@@ -44,7 +44,7 @@ public class AuthController {
                            BindingResult result,
                            Model model){
         // Unique validation for email address
-        User existingUser = userService.finByEmail(user.getEmail());
+        User existingUser = userService.findByEmail(user.getEmail());
         if(existingUser != null){
             result.rejectValue("email", null,"This email address is already registered. Kindly login!");
         }

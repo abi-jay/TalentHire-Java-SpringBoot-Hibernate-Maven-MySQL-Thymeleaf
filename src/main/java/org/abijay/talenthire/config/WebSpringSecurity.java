@@ -54,7 +54,7 @@ public class WebSpringSecurity {
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/talent/myclients")
+                        .defaultSuccessUrl("/talent/mytalents")
                         .loginProcessingUrl("/login")
                         .permitAll()
                 ).logout( logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

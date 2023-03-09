@@ -22,7 +22,7 @@
       <h4 th:utext="${talent.introduction}"></h4>
       <hr/>
       <h5>Review / Requests:</h5>
-      <div th:each = "request: ${talent.reviews}">
+      <div th:each = "request: ${talent.requests}">
         <div>
           <p><b>Name: </b><strong th:text="${request.name}"></strong></p>
           <p><b>Date: </b><span th:text="${#temporals.format(request.createdOn, 'dd MMMM yyyy')}"></span></p>
@@ -39,8 +39,8 @@
           <div class="card-body">
             <form role="form"
                   method="post"
-                  th:action="@{/{talentUrl}/reviews(talentUrl=${talent.url})}"
-                  th:object="${review}"
+                  th:action="@{/{talentUrl}/requests(talentUrl=${talent.url})}"
+                  th:object="${request}"
             >
               <div class="row">
                 <div class="col-md-5 mb-3">

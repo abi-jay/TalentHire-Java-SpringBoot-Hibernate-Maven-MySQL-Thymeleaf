@@ -1,8 +1,6 @@
 package org.abijay.talenthire.dto;
 
 import lombok.*;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 // to transfer data between view and controller layer
 @Setter
@@ -10,11 +8,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReviewDto {
+public class RequestDto {
     private Long id;
     private String name;
     private String email;
-    private String content;
+    private String requestMessage;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
 }

@@ -62,14 +62,43 @@ public class TalentServiceImpl implements TalentService {
     }
 
     @Override
+    public void createTalent(TalentDto talentDto) {
+        // get the logged person's email address
+        String email = SecurityUtils.getCurrentUser().getUsername();
+        User user = userRepository.findByEmail(email);
+        // set user object to talent object
+        // create talent JPA entity
+        Talent talent = TalentMapper.mapToTalent(talentDto);
+        talent.setCreatedBy(user);
+        talentRepository.save(talent);
+    }
+
+    @Override
     public TalentDto findClientById(Long clientId) {
         Talent talent = talentRepository.findById(clientId).get();
         // talent JPA entity to talentDTO
         return TalentMapper.mapToTalentDto(talent);
     }
-
+    @Override
+    public TalentDto findTalentById(Long talentId) {
+        Talent talent = talentRepository.findById(talentId).get();
+        // talent JPA entity to talentDTO
+        return TalentMapper.mapToTalentDto(talent);
+    }
     @Override
     public void updateClient(TalentDto talentDto) {
+        // email address of the logged in person
+        String email = SecurityUtils.getCurrentUser().getUsername();
+        User createdBy = userRepository.findByEmail(email);
+        // set the logged in user object to talent object
+        Talent talent = TalentMapper.mapToTalent(talentDto);
+        talent.setCreatedBy(createdBy);
+        // if talent object contains id (primary key), then save method will update record
+        // else it will save the new record
+        talentRepository.save(talent);
+    }
+    @Override
+    public void updateTalent(TalentDto talentDto) {
         // email address of the logged in person
         String email = SecurityUtils.getCurrentUser().getUsername();
         User createdBy = userRepository.findByEmail(email);
@@ -85,6 +114,10 @@ public class TalentServiceImpl implements TalentService {
     public void deleteClient(Long clientId) {
 
         talentRepository.deleteById(clientId);
+    }
+    @Override
+    public void deleteTalent(Long talentId) {
+        talentRepository.deleteById(talentId);
     }
 
     @Override

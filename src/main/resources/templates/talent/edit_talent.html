@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Edit the Talent</title>
+</head>
+<div th:replace="fragments/header :: header"></div>
+<body>
+<div th:replace="talent/navbar:: navbar"></div>
+<div class="container" style="margin-top:50px; margin-bottom:80px;">
+  <div class="row col-md-8 offset-md-2">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="text-center"> Edit talent details</h2>
+      </div>
+      <div class="card-body">
+        <!-- talentDto is the Java Bean, hence add validation to talentDto java bean class - client is the talentdto object here-->
+        <form role="form" method="post" th:action="@{/talent/mytalents/{talentId}(talentId=${talent.id})}" th:object="${talent}">
+          <div class="mb-3">
+            <label class="form-label">Talent</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="talent"
+                    placeholder="Enter Talent"
+                    th:field="*{talent}"
+            />
+            <p th:if="${#fields.hasErrors('talent')}" class="text-danger"
+               th:errors="*{talent}">
+            </p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control"
+                      id="about"
+                      placeholder="Enter details about Talent"
+                      rows="12"
+                      name="about"
+                      th:field="*{description}"
+            >
+                        </textarea>
+            <p th:if="${#fields.hasErrors('description')}" class="text-danger"
+               th:errors="*{description}">
+            </p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Hourly Pay</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="rate"
+                    placeholder="Enter the hourly charge"
+                    th:field="*{rate}"
+            />
+
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Location</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="location"
+                    placeholder="Enter your Location"
+                    th:field="*{location}"
+            />
+            <p th:if="${#fields.hasErrors('location')}" class="text-danger"
+               th:errors="*{location}">
+            </p>
+          </div>
+          <button type="submit" class="btn btn-info">Update</button>
+          <input
+                  type="hidden"
+                  id="memberSince"
+                  value="Date()"
+                  th:field="*{memberSince}"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+        crossorigin="anonymous"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+<script>
+                        ClassicEditor
+                                .create( document.querySelector( '#about' ) )
+                                .then( editor => {
+                                        console.log( editor );
+                                } )
+                                .catch( error => {
+                                        console.error( error );
+                                } );
+                </script>
+</body>
+</html>

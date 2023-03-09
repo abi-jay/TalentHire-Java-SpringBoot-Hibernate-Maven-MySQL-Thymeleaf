@@ -22,23 +22,20 @@ public class Talent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    @NotNull(message = "Name can't be empty!")
-    private String name;
-
-    @Lob
-    private String introduction;
-
     @Column(name = "talent")
     @NotNull(message = "Enter your talent")
     private String talent;
-    private String location;
-    private String email;
-    private String url;
+
+    @Lob
+    private String description;
 
     @CreationTimestamp
     private LocalDate memberSince;
+
     private BigDecimal rate;
+    private String url;
+    private String location;
+
     // One person can create Many talents
     // Primary key in User table becomes Foreign key Talent Table
     @ManyToOne
@@ -47,9 +44,9 @@ public class Talent {
 
     // Many unique comments for a single table record
     // Bidirectional mapping where Talent is the owning side of this relationship
-    // Whenever a talent record is deleted, hibernate should delete its reviews as well
+    // Whenever a talent record is deleted, hibernate should delete its requests as well
     @OneToMany(mappedBy = "talent", cascade = CascadeType.REMOVE)
-    private Set<Review> reviews = new HashSet<>();
+    private Set<Request> requests = new HashSet<>();
 
     @OneToMany(mappedBy = "talent", cascade = CascadeType.ALL)
     private Set<Fulfill> fulfills = new HashSet<>();

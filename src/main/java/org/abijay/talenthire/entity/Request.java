@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "reviews")
-public class Review {
+@Table(name = "requests")
+public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +23,7 @@ public class Review {
     @Column(nullable = false)
     private String email;
     @Lob
-    private String content;
+    private String requestMessage;
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp

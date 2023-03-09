@@ -13,7 +13,7 @@ public interface TalentRepository extends JpaRepository<Talent, Long> {
 
     // JPQL query to search Clients. JPQL uses entity and its fields, NOT table columns
     @Query("SELECT p FROM Talent p WHERE " +
-            " p.name LIKE CONCAT('%', :query, '%')")
+            " p.talent LIKE CONCAT('%', :query, '%')")
     List<Talent> searchClientsByName(String query);
 
     @Query("SELECT p FROM Talent p WHERE " +
@@ -26,7 +26,7 @@ public interface TalentRepository extends JpaRepository<Talent, Long> {
 
     @Query("SELECT p FROM Talent p WHERE " +
             "p.talent LIKE CONCAT('%', :query, '%') OR " +
-            "p.introduction LIKE CONCAT('%', :query, '%')")
+            "p.description LIKE CONCAT('%', :query, '%')")
     List<Talent> searchTalents(String query);
 
     // passing native SQL query to @Query annotation. uses table columns

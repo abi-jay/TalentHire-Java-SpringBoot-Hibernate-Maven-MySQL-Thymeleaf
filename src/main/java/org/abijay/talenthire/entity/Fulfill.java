@@ -23,7 +23,7 @@ public class Fulfill {
     @Column(nullable = false)
     private String email;
     @Lob
-    private String content;
+    private String requestMessage;
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp

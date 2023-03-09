@@ -1,57 +1,57 @@
 package org.abijay.talenthire.service.impl;
 
-import org.abijay.talenthire.dto.ReviewDto;
+import org.abijay.talenthire.dto.RequestDto;
 import org.abijay.talenthire.entity.Fulfill;
-import org.abijay.talenthire.entity.Review;
+import org.abijay.talenthire.entity.Request;
 import org.abijay.talenthire.entity.Talent;
-import org.abijay.talenthire.mapper.ReviewMapper;
+import org.abijay.talenthire.mapper.RequestMapper;
 import org.abijay.talenthire.repository.FulfillRepository;
-import org.abijay.talenthire.repository.ReviewRepository;
+import org.abijay.talenthire.repository.RequestRepository;
 import org.abijay.talenthire.repository.TalentRepository;
-import org.abijay.talenthire.service.ReviewService;
+import org.abijay.talenthire.service.RequestService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ReviewServiceImpl implements ReviewService {
+public class RequestServiceImpl implements RequestService {
     // inject dependencies
-    private ReviewRepository reviewRepository;
+    private RequestRepository requestRepository;
     private TalentRepository talentRepository;
     private FulfillRepository fulfillRepository;
     // Spring bean with single parameterized constructor- constructor based dependency injection
-    public ReviewServiceImpl(ReviewRepository reviewRepository, TalentRepository talentRepository, FulfillRepository fulfillRepository) {
-        this.reviewRepository = reviewRepository;
+    public RequestServiceImpl(RequestRepository requestRepository, TalentRepository talentRepository, FulfillRepository fulfillRepository) {
+        this.requestRepository = requestRepository;
         this.talentRepository = talentRepository;
         this.fulfillRepository = fulfillRepository;
     }
 
     @Override
-    public void createReview(String talentUrl, ReviewDto reviewDto) {
-        // one to many talent to review relationship
+    public void createRequest(String talentUrl, RequestDto requestDto) {
+        // one to many talent to request relationship
         Talent talent = talentRepository.findByUrl(talentUrl).get();
-        Review review = ReviewMapper.mapToReview(reviewDto);
-        review.setTalent(talent);
-        reviewRepository.save(review);
+        Request request = RequestMapper.mapToReview(requestDto);
+        request.setTalent(talent);
+        requestRepository.save(request);
     }
 
     @Override
-    public List<ReviewDto> findAllReviews() {
-        List<Review> reviews = reviewRepository.findAll();
-        return reviews.stream()
-                .map(ReviewMapper::mapToReviewDto)
+    public List<RequestDto> findAllRequests() {
+        List<Request> requests = requestRepository.findAll();
+        return requests.stream()
+                .map(RequestMapper::mapToReviewDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Fulfill fulfillRequest(Long requestId) {
-        Review request = reviewRepository.findById(requestId).get();
-        reviewRepository.deleteById(requestId);
-        System.out.println("Fest: "+request.getContent()+request.getTalent());
+        Request request = requestRepository.findById(requestId).get();
+        requestRepository.deleteById(requestId);
+        System.out.println("Fest: "+request.getRequestMessage()+request.getTalent());
         Fulfill fulfill = new Fulfill();
         fulfill.setId(request.getId());
-        fulfill.setContent(request.getContent());
+        fulfill.setRequestMessage(request.getRequestMessage());
         fulfill.setCreatedOn(request.getCreatedOn());
         fulfill.setEmail(request.getEmail());
         fulfill.setName(request.getName());

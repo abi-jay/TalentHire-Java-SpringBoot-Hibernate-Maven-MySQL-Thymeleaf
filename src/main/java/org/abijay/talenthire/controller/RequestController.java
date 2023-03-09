@@ -1,8 +1,8 @@
 package org.abijay.talenthire.controller;
 
-import org.abijay.talenthire.dto.ReviewDto;
+import org.abijay.talenthire.dto.RequestDto;
 import org.abijay.talenthire.dto.TalentDto;
-import org.abijay.talenthire.service.ReviewService;
+import org.abijay.talenthire.service.RequestService;
 import org.abijay.talenthire.service.TalentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,32 +14,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 
 @Controller
-public class ReviewController {
-    private ReviewService reviewService;
+public class RequestController {
+    private RequestService requestService;
     private TalentService talentService;
     // constructor based dependency injection
 
 
-    public ReviewController(ReviewService reviewService, TalentService talentService) {
-        this.reviewService = reviewService;
+    public RequestController(RequestService requestService, TalentService talentService) {
+        this.requestService = requestService;
         this.talentService = talentService;
     }
 
     // handler method to handle create review form submit request
     // @ModelAttribute will bind every form data to model object that is now available to the handler method below
     // whenever a review is added, redirect to show talent handler
-    @PostMapping("/{talentUrl}/reviews")
+    @PostMapping("/{talentUrl}/requests")
     public String createReview(@PathVariable("talentUrl") String talentUrl,
-                               @Valid @ModelAttribute("review") ReviewDto reviewDto,
+                               @Valid @ModelAttribute("review") RequestDto requestDto,
                                BindingResult result,
                                Model model){
         TalentDto talentDto = talentService.findTalentByUrl(talentUrl);
         if(result.hasErrors()){
             model.addAttribute("talent", talentDto);
-            model.addAttribute("review", reviewDto);
+            model.addAttribute("review", requestDto);
             return "list/show_talent";
         }
-        reviewService.createReview(talentUrl,reviewDto);
+        requestService.createRequest(talentUrl, requestDto);
         return "redirect:/talent/" + talentUrl;
     }
 }

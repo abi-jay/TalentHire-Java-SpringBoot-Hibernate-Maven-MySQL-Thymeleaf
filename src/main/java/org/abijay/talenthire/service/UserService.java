@@ -6,5 +6,5 @@ import org.abijay.talenthire.entity.User;
 public interface UserService {
     void saveUser(RegistrationDto registrationDto);
 
-    User finByEmail(String email);
+    User findByEmail(String email);
 }

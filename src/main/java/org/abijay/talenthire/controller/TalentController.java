@@ -1,9 +1,9 @@
 package org.abijay.talenthire.controller;
 
-import org.abijay.talenthire.dto.ReviewDto;
+import org.abijay.talenthire.dto.RequestDto;
 import org.abijay.talenthire.dto.TalentDto;
 import org.abijay.talenthire.entity.Fulfill;
-import org.abijay.talenthire.service.ReviewService;
+import org.abijay.talenthire.service.RequestService;
 import org.abijay.talenthire.service.TalentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,21 +18,28 @@ public class TalentController {
     // Interface is recommended to use for DI. Because it provides Loose coupling.
     // At run-time, able to use any implementation if we inject Interface
     private TalentService talentService;
-    private ReviewService reviewService;
+    private RequestService requestService;
     // Constructor based DI
 
 
-    public TalentController(TalentService talentService, ReviewService reviewService) {
+    public TalentController(TalentService talentService, RequestService requestService) {
         this.talentService = talentService;
-        this.reviewService = reviewService;
+        this.requestService = requestService;
     }
 
     // Handler method to handle HTTP GET request and return model and view
     @GetMapping("/talent/myclients")
-    public String talents(Model model) {
+    public String clients(Model model) {
         List<TalentDto> talents = talentService.findTalentsByUser();
         model.addAttribute("talents", talents);
         return "/talent/myclients";
+    }
+    // Handler method to handle HTTP GET request and return model and view
+    @GetMapping("/talent/mytalents")
+    public String talents(Model model) {
+        List<TalentDto> talents = talentService.findTalentsByUser();
+        model.addAttribute("talents", talents);
+        return "/talent/mytalents";
     }
 
     // Handler method to handle new Client HTTP request
@@ -41,6 +48,13 @@ public class TalentController {
         TalentDto talentDto = new TalentDto();
         model.addAttribute("talent", talentDto);
         return "talent/new_client";
+    }
+    // Handler method to handle new Talent HTTP request
+    @GetMapping("/talent/mytalents/newtalent")
+    public String newTalentForm(Model model) {
+        TalentDto talentDto = new TalentDto();
+        model.addAttribute("talent", talentDto);
+        return "talent/new_talent";
     }
 
     // Handler method to handle form submit POST request
@@ -60,6 +74,23 @@ public class TalentController {
         talentService.createClient(talentDto);
         return "redirect:/talent/myclients";
     }
+    // Handler method to handle form submit POST request
+    // ModelAttribute annotation will read data from form and set the values to the fields of model object
+    // Binding result class is used to check the error and return it to the view
+    @PostMapping("/talent/mytalents")
+    public String createTalent(@Valid @ModelAttribute("talent") TalentDto talentDto,
+                               BindingResult result,
+                               Model model) {
+        talentDto.setUrl(getUrl(talentDto.getTalent()));
+        if (result.hasErrors()) {
+            // return to the same calling page, newclient in case of error in validation
+            model.addAttribute("talent", talentDto);
+            return "talent/new_talent";
+        }
+        // no error, then display myclients to showcase the newly added row
+        talentService.createTalent(talentDto);
+        return "redirect:/talent/mytalents";
+    }
 
     // Handler method to handle edit Client request
     @GetMapping("/talent/myclients/{clientId}/edit")
@@ -68,6 +99,14 @@ public class TalentController {
         TalentDto talentDto = talentService.findClientById(clientId);
         model.addAttribute("client",talentDto);
         return "talent/edit_client";
+    }
+    // Handler method to handle edit Talent request
+    @GetMapping("/talent/mytalents/{talentId}/edit")
+    public String editTalentForm(@PathVariable("talentId") Long talentId,
+                                 Model model) {
+        TalentDto talentDto = talentService.findTalentById(talentId);
+        model.addAttribute("talent",talentDto);
+        return "talent/edit_talent";
     }
 
     // Handler method to handle edit client form submit request
@@ -85,6 +124,21 @@ public class TalentController {
         talentService.updateClient(talentDto);
         return "redirect:/talent/myclients";
     }
+    // Handler method to handle edit talent form submit request
+    // Post Mapping handles HTTP POST requests
+    @PostMapping("/talent/mytalents/{talentId}")
+    public String updateTalent(@PathVariable("talentId") Long talentId,
+                               @ModelAttribute("talent") TalentDto talentDto,
+                               BindingResult result,
+                               Model model){
+        if (result.hasErrors()){
+            model.addAttribute("talent",talentDto);
+            return "talent/edit_talent";
+        }
+        talentDto.setId(talentId);
+        talentService.updateTalent(talentDto);
+        return "redirect:/talent/mytalents";
+    }
 
     // Handler method to handle client Delete request
     // PathVariable annotation gets the clientId value from the url
@@ -94,9 +148,26 @@ public class TalentController {
         talentService.deleteClient(clientId);
         return "redirect:/talent/myclients";
     }
+    // Handler method to handle Talent Delete request
+    // PathVariable annotation gets the talentId value from the url
+    // After deletion redirect to list of talents page
+    @GetMapping("/talent/mytalents/{talentId}/delete")
+    public String deleteTalent(@PathVariable("talentId") Long talentId){
+        talentService.deleteTalent(talentId);
+        return "redirect:/talent/mytalents";
+    }
 
-    // Handler method to handle view talent request
+
+    // Handler method to handle view client request
     @GetMapping("/talent/myclients/{talentUrl}/view")
+    public String viewClient(@PathVariable("talentUrl") String talentUrl,
+                             Model model){
+        TalentDto talentDto = talentService.findTalentByUrl(talentUrl);
+        model.addAttribute("talent", talentDto);
+        return "talent/view_talent";
+    }
+    // Handler method to handle view talent request
+    @GetMapping("/talent/mytalents/{talentUrl}/view")
     public String viewTalent(@PathVariable("talentUrl") String talentUrl,
                              Model model){
         TalentDto talentDto = talentService.findTalentByUrl(talentUrl);
@@ -138,7 +209,14 @@ public class TalentController {
     // Handler method to handle list requests method
     @GetMapping("/talent/myclients/requests")
     public String talentRequests(Model model){
-        List<ReviewDto> requests = reviewService.findAllReviews();
+        List<RequestDto> requests = requestService.findAllRequests();
+        model.addAttribute("requests",requests);
+        return "talent/requests";
+    }
+    // Handler method to handle list requests method
+    @GetMapping("/talent/mytalents/requests")
+    public String talentRequest(Model model){
+        List<RequestDto> requests = requestService.findAllRequests();
         model.addAttribute("requests",requests);
         return "talent/requests";
     }
@@ -146,9 +224,16 @@ public class TalentController {
     // Handler method to handle fulfill Talent service request
     @GetMapping("/talent/myclients/requests/{requestId}")
     public String fulfillRequest(@PathVariable("requestId") Long requestId, Model model){
-        Fulfill fulfill = reviewService.fulfillRequest(requestId);
+        Fulfill fulfill = requestService.fulfillRequest(requestId);
         model.addAttribute("fulfill",fulfill);
         return  "redirect:/talent/myclients/requests";
+    }
+    // Handler method to handle fulfill Talent service request
+    @GetMapping("/talent/mytalents/requests/{requestId}")
+    public String fulfillRequestById(@PathVariable("requestId") Long requestId, Model model){
+        Fulfill fulfill = requestService.fulfillRequest(requestId);
+        model.addAttribute("fulfill",fulfill);
+        return  "redirect:/talent/mytalents/requests";
     }
 
     private static String getUrl(String talentTitle){

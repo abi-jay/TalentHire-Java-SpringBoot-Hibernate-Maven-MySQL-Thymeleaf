@@ -26,10 +26,10 @@
           <td th:text="${requestStat.count}"></td>
           <td th:text="${request.name}"></td>
           <td th:text="${request.email}"></td>
-          <td th:text="${request.content}"></td>
+          <td th:text="${request.requestMessage}"></td>
           <td th:text="${#temporals.format(request.createdOn, 'dd MMM yyyy')}"></td>
           <td>
-            <a class="btn btn-info" th:href="@{/talent/myclients/requests/{requestId}(requestId=${request.id})}">Fulfill</a>
+            <a class="btn btn-info" th:href="@{/talent/mytalents/requests/{requestId}(requestId=${request.id})}">Fulfill</a>
           </td>
         </tr>
       </tbody>

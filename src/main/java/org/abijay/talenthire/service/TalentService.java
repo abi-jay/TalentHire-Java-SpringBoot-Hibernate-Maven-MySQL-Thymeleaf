@@ -21,6 +21,12 @@ public interface TalentService {
     TalentDto findTalentByUrl(String talentUrl);
 
     List<TalentDto> searchTalents(String query);
+
+    void createTalent(TalentDto talentDto);
+    TalentDto findTalentById(Long talentId);
+    void updateTalent(TalentDto talentDto);
+    void deleteTalent(Long talentId);
+
 }
 
 

@@ -4,7 +4,7 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title>Add a Client</title>
+    <title>Add a Talent</title>
 </head>
 <div th:replace="fragments/header :: header"></div>
 <body>
@@ -13,11 +13,11 @@
     <div class="row col-md-8 offset-md-2">
         <div class="card">
             <div class="card-header">
-                <h2 class="text-center"> New client details</h2>
+                <h2 class="text-center"> New talent details</h2>
             </div>
             <div class="card-body">
                 <!-- talentDto is the Java Bean, hence add validation to talentDto java bean class -->
-                <form role="form" method="post" th:action="@{/talent/myclients}" th:object="${talent}">
+                <form role="form" method="post" th:action="@{/talent/mytalents}" th:object="${talent}">
                     <div class="mb-3">
                         <label class="form-label"> Name </label>
                         <input
@@ -45,20 +45,6 @@
                         </p>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Client</label>
-                        <textarea class="form-control"
-                                  id="about"
-                                  placeholder="Enter details about Client"
-                                  rows="12"
-                                  name="about"
-                                  th:field="*{introduction}"
-                        >
-                        </textarea>
-                        <p th:if="${#fields.hasErrors('introduction')}" class="text-danger"
-                           th:errors="*{introduction}">
-                        </p>
-                    </div>
-                    <div class="mb-3">
                         <label class="form-label">Talent</label>
                         <input
                                 type="text"
@@ -69,6 +55,20 @@
                         />
                         <p th:if="${#fields.hasErrors('talent')}" class="text-danger"
                            th:errors="*{talent}">
+                        </p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Describe</label>
+                        <textarea class="form-control"
+                                  id="about"
+                                  placeholder="Enter details about the talent"
+                                  rows="12"
+                                  name="about"
+                                  th:field="*{introduction}"
+                        >
+                        </textarea>
+                        <p th:if="${#fields.hasErrors('introduction')}" class="text-danger"
+                           th:errors="*{introduction}">
                         </p>
                     </div>
                     <div class="mb-3">
@@ -108,5 +108,19 @@
     </div>
 </div>
 <div th:replace="fragments/footer :: footer"></div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+        crossorigin="anonymous"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+<script>
+                        ClassicEditor
+                                .create( document.querySelector( '#editor' ) )
+                                .then( editor => {
+                                        console.log( editor );
+                                } )
+                                .catch( error => {
+                                        console.error( error );
+                                } );
+                </script>
 </body>
 </html>
