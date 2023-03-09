@@ -2,6 +2,7 @@ package org.abijay.talenthire.controller;
 
 import org.abijay.talenthire.dto.ReviewDto;
 import org.abijay.talenthire.dto.TalentDto;
+import org.abijay.talenthire.entity.Fulfill;
 import org.abijay.talenthire.service.ReviewService;
 import org.abijay.talenthire.service.TalentService;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ public class TalentController {
     // Handler method to handle HTTP GET request and return model and view
     @GetMapping("/talent/myclients")
     public String talents(Model model) {
-        List<TalentDto> talents = talentService.findAllTalents();
+        List<TalentDto> talents = talentService.findTalentsByUser();
         model.addAttribute("talents", talents);
         return "/talent/myclients";
     }
@@ -144,8 +145,9 @@ public class TalentController {
 
     // Handler method to handle fulfill Talent service request
     @GetMapping("/talent/myclients/requests/{requestId}")
-    public String fulfillRequest(@PathVariable("requestId") Long requestId){
-        reviewService.fulfillRequest(requestId);
+    public String fulfillRequest(@PathVariable("requestId") Long requestId, Model model){
+        Fulfill fulfill = reviewService.fulfillRequest(requestId);
+        model.addAttribute("fulfill",fulfill);
         return  "redirect:/talent/myclients/requests";
     }
 

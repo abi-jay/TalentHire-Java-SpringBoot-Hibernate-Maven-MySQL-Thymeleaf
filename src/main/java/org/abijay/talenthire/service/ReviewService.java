@@ -1,6 +1,8 @@
 package org.abijay.talenthire.service;
 
 import org.abijay.talenthire.dto.ReviewDto;
+import org.abijay.talenthire.entity.Fulfill;
+import org.abijay.talenthire.entity.Review;
 
 import java.util.List;
 
@@ -9,5 +11,5 @@ public interface ReviewService {
 
     List<ReviewDto> findAllReviews();
 
-    void fulfillRequest(Long requestId);
+    Fulfill fulfillRequest(Long requestId);
 }

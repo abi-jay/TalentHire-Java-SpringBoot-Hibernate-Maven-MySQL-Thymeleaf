@@ -2,9 +2,12 @@ package org.abijay.talenthire.service.impl;
 
 import org.abijay.talenthire.dto.TalentDto;
 import org.abijay.talenthire.entity.Talent;
+import org.abijay.talenthire.entity.User;
 import org.abijay.talenthire.mapper.TalentMapper;
 import org.abijay.talenthire.repository.TalentRepository;
+import org.abijay.talenthire.repository.UserRepository;
 import org.abijay.talenthire.service.TalentService;
+import org.abijay.talenthire.util.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +19,14 @@ public class TalentServiceImpl implements TalentService {
 
     // Constructor based Dependency injection to inject TalentRepository in a TalentServiceImpl class
     private TalentRepository talentRepository;
+    private UserRepository userRepository;
 
     // Whenever Spring Bean has single constructor, Spring will automatically inject the dependency
-    public TalentServiceImpl(TalentRepository talentRepository) {
+
+
+    public TalentServiceImpl(TalentRepository talentRepository, UserRepository userRepository) {
         this.talentRepository = talentRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -29,10 +36,28 @@ public class TalentServiceImpl implements TalentService {
                 .collect(Collectors.toList());
     }
 
+    // get list of talents of logged in person
+    @Override
+    public List<TalentDto> findTalentsByUser() {
+        // get email address of logged in person
+        String email = SecurityUtils.getCurrentUser().getUsername();
+        User createdBy = userRepository.findByEmail(email);
+        Long userId = createdBy.getId();
+        List<Talent> talents = talentRepository.findTalentsByUser(userId);
+        return talents.stream()
+                .map(TalentMapper::mapToTalentDto)
+                .collect(Collectors.toList());
+    }
+
     @Override
     public void createClient(TalentDto talentDto) {
+        // get the logged person's email address
+        String email = SecurityUtils.getCurrentUser().getUsername();
+        User user = userRepository.findByEmail(email);
+        // set user object to talent object
         // create talent JPA entity
         Talent talent = TalentMapper.mapToTalent(talentDto);
+        talent.setCreatedBy(user);
         talentRepository.save(talent);
     }
 
@@ -45,7 +70,12 @@ public class TalentServiceImpl implements TalentService {
 
     @Override
     public void updateClient(TalentDto talentDto) {
+        // email address of the logged in person
+        String email = SecurityUtils.getCurrentUser().getUsername();
+        User createdBy = userRepository.findByEmail(email);
+        // set the logged in user object to talent object
         Talent talent = TalentMapper.mapToTalent(talentDto);
+        talent.setCreatedBy(createdBy);
         // if talent object contains id (primary key), then save method will update record
         // else it will save the new record
         talentRepository.save(talent);

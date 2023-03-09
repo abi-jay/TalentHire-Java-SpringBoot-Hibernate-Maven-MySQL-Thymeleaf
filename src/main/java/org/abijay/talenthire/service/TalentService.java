@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface TalentService {
     List<TalentDto> findAllTalents();
+
+    List<TalentDto> findTalentsByUser();
     // method to create new client in database with the dto provided
     void createClient(TalentDto talentDto);
     TalentDto findClientById(Long clientId);

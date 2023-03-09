@@ -39,10 +39,18 @@ public class Talent {
     @CreationTimestamp
     private LocalDate memberSince;
     private BigDecimal rate;
+    // One person can create Many talents
+    // Primary key in User table becomes Foreign key Talent Table
+    @ManyToOne
+    @JoinColumn(name = "created_by", nullable = false)
+    private User createdBy;
 
     // Many unique comments for a single table record
     // Bidirectional mapping where Talent is the owning side of this relationship
     // Whenever a talent record is deleted, hibernate should delete its reviews as well
     @OneToMany(mappedBy = "talent", cascade = CascadeType.REMOVE)
     private Set<Review> reviews = new HashSet<>();
+
+    @OneToMany(mappedBy = "talent", cascade = CascadeType.ALL)
+    private Set<Fulfill> fulfills = new HashSet<>();
 }
