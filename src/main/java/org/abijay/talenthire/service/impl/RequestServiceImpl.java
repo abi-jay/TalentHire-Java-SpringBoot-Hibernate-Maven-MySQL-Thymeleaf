@@ -4,11 +4,14 @@ import org.abijay.talenthire.dto.RequestDto;
 import org.abijay.talenthire.entity.Fulfill;
 import org.abijay.talenthire.entity.Request;
 import org.abijay.talenthire.entity.Talent;
+import org.abijay.talenthire.entity.User;
 import org.abijay.talenthire.mapper.RequestMapper;
 import org.abijay.talenthire.repository.FulfillRepository;
 import org.abijay.talenthire.repository.RequestRepository;
 import org.abijay.talenthire.repository.TalentRepository;
+import org.abijay.talenthire.repository.UserRepository;
 import org.abijay.talenthire.service.RequestService;
+import org.abijay.talenthire.util.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,11 +23,15 @@ public class RequestServiceImpl implements RequestService {
     private RequestRepository requestRepository;
     private TalentRepository talentRepository;
     private FulfillRepository fulfillRepository;
+    private UserRepository userRepository;
     // Spring bean with single parameterized constructor- constructor based dependency injection
-    public RequestServiceImpl(RequestRepository requestRepository, TalentRepository talentRepository, FulfillRepository fulfillRepository) {
+
+
+    public RequestServiceImpl(RequestRepository requestRepository, TalentRepository talentRepository, FulfillRepository fulfillRepository, UserRepository userRepository) {
         this.requestRepository = requestRepository;
         this.talentRepository = talentRepository;
         this.fulfillRepository = fulfillRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -67,5 +74,16 @@ public class RequestServiceImpl implements RequestService {
 
         Request request = requestRepository.findById(requestId).get();
         requestRepository.deleteById(requestId);
+    }
+
+    @Override
+    public List<RequestDto> findRequestsByTalent() {
+        String email = SecurityUtils.getCurrentUser().getUsername();
+        User createdBy = userRepository.findByEmail(email);
+        Long userId = createdBy.getId();
+        List<Request> requests = requestRepository.findRequestsByTalent(userId);
+        return requests.stream()
+                .map(RequestMapper::mapToRequestDto)
+                .collect(Collectors.toList());
     }
 }

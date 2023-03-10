@@ -5,6 +5,8 @@ import org.abijay.talenthire.dto.TalentDto;
 import org.abijay.talenthire.entity.Fulfill;
 import org.abijay.talenthire.service.RequestService;
 import org.abijay.talenthire.service.TalentService;
+import org.abijay.talenthire.util.ROLE;
+import org.abijay.talenthire.util.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,7 +40,15 @@ public class TalentController {
     // Handler method to handle HTTP GET request and return model and view
     @GetMapping("/talent/mytalents")
     public String talents(Model model) {
-        List<TalentDto> talents = talentService.findTalentsByUser();
+        // Get the role of logged in user
+        String role = SecurityUtils.getRole();
+        List<TalentDto> talents = null;
+        if(ROLE.ROLE_ADMIN.name().equals(role)){
+            talents = talentService.findAllTalents();
+        }
+        else {
+            talents = talentService.findTalentsByUser();
+        }
         model.addAttribute("talents", talents);
         return "/talent/mytalents";
     }
@@ -217,7 +227,14 @@ public class TalentController {
     // Handler method to handle list requests method
     @GetMapping("/talent/mytalents/requests")
     public String talentRequest(Model model){
-        List<RequestDto> requests = requestService.findAllRequests();
+        String role = SecurityUtils.getRole();
+        List<RequestDto> requests = null;
+        if(ROLE.ROLE_ADMIN.name().equals(role)){
+            requests = requestService.findAllRequests();
+        }
+        else{
+            requests = requestService.findRequestsByTalent();
+        }
         model.addAttribute("requests",requests);
         return "talent/requests";
     }

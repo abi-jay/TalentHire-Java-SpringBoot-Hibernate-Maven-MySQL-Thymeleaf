@@ -13,4 +13,6 @@ public interface RequestService {
     Fulfill fulfillRequest(Long requestId);
 
     void deleteRequest(Long requestId);
+
+    List<RequestDto> findRequestsByTalent();
 }
