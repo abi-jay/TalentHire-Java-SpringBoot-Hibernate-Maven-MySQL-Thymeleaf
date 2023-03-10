@@ -11,4 +11,6 @@ public interface RequestService {
     List<RequestDto> findAllRequests();
 
     Fulfill fulfillRequest(Long requestId);
+
+    void deleteRequest(Long requestId);
 }

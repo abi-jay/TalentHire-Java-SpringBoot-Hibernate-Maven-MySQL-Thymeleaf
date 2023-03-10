@@ -26,6 +26,7 @@ public interface TalentRepository extends JpaRepository<Talent, Long> {
 
     @Query("SELECT p FROM Talent p WHERE " +
             "p.talent LIKE CONCAT('%', :query, '%') OR " +
+            "p.shortDescription LIKE CONCAT('%', :query, '%') OR " +
             "p.description LIKE CONCAT('%', :query, '%')")
     List<Talent> searchTalents(String query);
 

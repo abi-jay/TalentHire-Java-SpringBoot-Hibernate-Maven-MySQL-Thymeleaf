@@ -5,7 +5,7 @@ import org.abijay.talenthire.entity.Request;
 
 public class RequestMapper {
     // Map request entity to request dto
-    public static RequestDto mapToReviewDto(Request request){
+    public static RequestDto mapToRequestDto(Request request){
         return RequestDto.builder()
                 .id(request.getId())
                 .name(request.getName())
@@ -17,7 +17,7 @@ public class RequestMapper {
 
     }
     // Map review dto to review entity
-    public static Request mapToReview(RequestDto requestDto){
+    public static Request mapToRequest(RequestDto requestDto){
         return Request.builder()
                 .id(requestDto.getId())
                 .name(requestDto.getName())

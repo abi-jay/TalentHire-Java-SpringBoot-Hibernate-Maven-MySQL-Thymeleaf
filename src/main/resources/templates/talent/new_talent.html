@@ -32,10 +32,23 @@
             </p>
           </div>
           <div class="mb-3">
+            <label class="form-label">Short Description</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="shortDescription"
+                    placeholder="Describe Talent"
+                    th:field="*{shortDescription}"
+            />
+            <p th:if="${#fields.hasErrors('shortDescription')}" class="text-danger"
+               th:errors="*{shortDescription}">
+            </p>
+          </div>
+          <div class="mb-3">
             <label class="form-label">Describe</label>
             <textarea class="form-control"
                       id="about"
-                      placeholder="Enter details about the talent"
+                      placeholder="Enter more details about the talent"
                       rows="12"
                       name="about"
                       th:field="*{description}"

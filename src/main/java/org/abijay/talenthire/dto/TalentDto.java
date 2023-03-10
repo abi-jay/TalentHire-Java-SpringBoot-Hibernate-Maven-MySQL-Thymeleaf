@@ -18,6 +18,7 @@ public class TalentDto {
     private Long id;
     @NotEmpty(message = "Talent should not be empty")
     private String talent;
+    private String shortDescription;
     @NotEmpty(message = "Please enter few details on your talent")
     private String description;
     private LocalDate memberSince;

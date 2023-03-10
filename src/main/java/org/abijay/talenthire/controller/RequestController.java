@@ -30,15 +30,18 @@ public class RequestController {
     // whenever a review is added, redirect to show talent handler
     @PostMapping("/{talentUrl}/requests")
     public String createReview(@PathVariable("talentUrl") String talentUrl,
-                               @Valid @ModelAttribute("review") RequestDto requestDto,
+                               @Valid @ModelAttribute("request") RequestDto requestDto,
                                BindingResult result,
                                Model model){
         TalentDto talentDto = talentService.findTalentByUrl(talentUrl);
+        System.out.println("1");
         if(result.hasErrors()){
+            System.out.println("11");
             model.addAttribute("talent", talentDto);
-            model.addAttribute("review", requestDto);
+            model.addAttribute("request", requestDto);
             return "list/show_talent";
         }
+        System.out.println("111");
         requestService.createRequest(talentUrl, requestDto);
         return "redirect:/talent/" + talentUrl;
     }

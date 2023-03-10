@@ -30,6 +30,7 @@ public class TalentController {
     // Handler method to handle HTTP GET request and return model and view
     @GetMapping("/talent/myclients")
     public String clients(Model model) {
+        System.out.println("here");
         List<TalentDto> talents = talentService.findTalentsByUser();
         model.addAttribute("talents", talents);
         return "/talent/myclients";
@@ -233,6 +234,11 @@ public class TalentController {
     public String fulfillRequestById(@PathVariable("requestId") Long requestId, Model model){
         Fulfill fulfill = requestService.fulfillRequest(requestId);
         model.addAttribute("fulfill",fulfill);
+        return  "redirect:/talent/mytalents/requests";
+    }
+    @GetMapping("/talent/mytalents/requests/{requestId}/delete")
+    public String deleteRequestById(@PathVariable("requestId") Long requestId, Model model){
+        requestService.deleteRequest(requestId);
         return  "redirect:/talent/mytalents/requests";
     }
 

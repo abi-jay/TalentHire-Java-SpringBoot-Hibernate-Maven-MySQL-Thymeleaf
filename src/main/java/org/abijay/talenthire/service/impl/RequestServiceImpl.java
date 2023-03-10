@@ -31,16 +31,17 @@ public class RequestServiceImpl implements RequestService {
     public void createRequest(String talentUrl, RequestDto requestDto) {
         // one to many talent to request relationship
         Talent talent = talentRepository.findByUrl(talentUrl).get();
-        Request request = RequestMapper.mapToReview(requestDto);
+        Request request = RequestMapper.mapToRequest(requestDto);
         request.setTalent(talent);
         requestRepository.save(request);
+        System.out.println("11111");
     }
 
     @Override
     public List<RequestDto> findAllRequests() {
         List<Request> requests = requestRepository.findAll();
         return requests.stream()
-                .map(RequestMapper::mapToReviewDto)
+                .map(RequestMapper::mapToRequestDto)
                 .collect(Collectors.toList());
     }
 
@@ -59,5 +60,12 @@ public class RequestServiceImpl implements RequestService {
         fulfill.setTalent(request.getTalent());
         fulfillRepository.save(fulfill);
         return fulfill;
+    }
+
+    @Override
+    public void deleteRequest(Long requestId) {
+
+        Request request = requestRepository.findById(requestId).get();
+        requestRepository.deleteById(requestId);
     }
 }

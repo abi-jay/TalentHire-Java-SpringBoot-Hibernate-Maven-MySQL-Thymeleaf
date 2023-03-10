@@ -12,21 +12,18 @@
       <h3>Talent: </h3>
       <h2 th:text="${talent.talent}"></h2>
       <hr/>
-      <h3>Name:</h3>
-      <h4 th:text="${talent.name}"></h4>
-      <hr/>
       <h3>Location:</h3>
       <h4 th:text="${talent.location}"></h4>
       <hr/>
       <h3>About:</h3>
-      <h4 th:utext="${talent.introduction}"></h4>
+      <h4 th:utext="${talent.description}"></h4>
       <hr/>
       <h5>Review / Requests:</h5>
       <div th:each = "request: ${talent.requests}">
         <div>
           <p><b>Name: </b><strong th:text="${request.name}"></strong></p>
           <p><b>Date: </b><span th:text="${#temporals.format(request.createdOn, 'dd MMMM yyyy')}"></span></p>
-          <p th:text="${request.content}"></p>
+          <p th:text="${request.requestMessage}"></p>
           <br />
         </div>
       </div>
@@ -48,9 +45,8 @@
                          id="name"
                          name="name"
                          placeholder="Enter Name"
-                         th:field="*{name}"
+                         field="*{name}"
                          type="text"/>
-                  <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></p>
                 </div>
               </div>
               <div class="row">
@@ -59,22 +55,19 @@
                          id="email"
                          name="email"
                          placeholder="Enter Email"
-                         th:field="*{email}"
+                         field="*{email}"
                          type="text"/>
-                  <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-8 mb-3">
                     <textarea
                             class="form-control"
-                            id="content"
-                            name="content"
+                            id="requestMessage"
+                            name="requestMessage"
                             placeholder="Details on what you need"
                             rows="8"
-                            th:field="*{content}">
-                    </textarea>
-                  <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-danger"></p>
+                            field="*{requestMessage}"></textarea>
                 </div>
               </div>
               <div class="row">

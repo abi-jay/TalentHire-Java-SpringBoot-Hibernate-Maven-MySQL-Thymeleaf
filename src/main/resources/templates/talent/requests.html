@@ -13,12 +13,12 @@
     <table class="table table-striped table-hover table-bordered">
       <thead class="table-dark">
         <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Request</th>
-          <th>Requested Date</th>
-          <th>Actions</th>
+          <th style="width:3%">#</th>
+          <th style="width:13%">Name</th>
+          <th style="width:12%">Email</th>
+          <th style="width:45%">Request</th>
+          <th style="width:12%">Requested Date</th>
+          <th style="width:15%">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -30,6 +30,7 @@
           <td th:text="${#temporals.format(request.createdOn, 'dd MMM yyyy')}"></td>
           <td>
             <a class="btn btn-info" th:href="@{/talent/mytalents/requests/{requestId}(requestId=${request.id})}">Fulfill</a>
+            <a class="btn btn-danger" th:href="@{/talent/mytalents/requests/{requestId}/delete(requestId=${request.id})}">Delete</a>
           </td>
         </tr>
       </tbody>

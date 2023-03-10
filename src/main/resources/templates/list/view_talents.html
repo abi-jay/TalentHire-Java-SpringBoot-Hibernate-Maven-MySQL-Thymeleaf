@@ -18,13 +18,14 @@
 
                         </h3>
                         <div>
+                            <strong th:text="${talent.location}">
+                            </strong>
                             <strong th:text="${#temporals.format(talent.memberSince,'dd MMM yyyy')}">
-
                             </strong>
                         </div>
                     </div>
                     <div class="card-body">
-                        <span th:utext="${talent.introduction}"></span>
+                        <span th:utext="${talent.shortDescription}"></span>
                         <a th:href="@{/talent/{talentUrl}(talentUrl=${talent.url})}" > Know more!</a>
                     </div>
                 </div>

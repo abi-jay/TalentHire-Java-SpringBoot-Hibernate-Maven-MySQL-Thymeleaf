@@ -14,11 +14,12 @@ public class TalentMapper {
                 .talent(talent.getTalent())
                 .url(talent.getUrl())
                 .location(talent.getLocation())
+                .shortDescription(talent.getShortDescription())
                 .description(talent.getDescription())
                 .memberSince(talent.getMemberSince())
                 .rate(talent.getRate())
                 .requests(talent.getRequests().stream()
-                        .map(RequestMapper::mapToReviewDto)
+                        .map(RequestMapper::mapToRequestDto)
                         .collect(Collectors.toSet()))
                 .build();
     }
@@ -30,6 +31,7 @@ public class TalentMapper {
                 .talent(talentDto.getTalent())
                 .url(talentDto.getUrl())
                 .location(talentDto.getLocation())
+                .shortDescription(talentDto.getShortDescription())
                 .description(talentDto.getDescription())
                 .location(talentDto.getLocation())
                 .memberSince(talentDto.getMemberSince())
