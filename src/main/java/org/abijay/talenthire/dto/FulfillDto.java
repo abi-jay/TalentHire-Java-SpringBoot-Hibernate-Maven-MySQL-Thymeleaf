@@ -13,7 +13,7 @@ public class FulfillDto {
     private Long id;
     private String name;
     private String email;
-    private String content;
+    private String requestMessage;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
 }
