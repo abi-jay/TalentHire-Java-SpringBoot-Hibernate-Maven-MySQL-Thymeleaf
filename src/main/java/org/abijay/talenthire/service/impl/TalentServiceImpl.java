@@ -135,30 +135,6 @@ public class TalentServiceImpl implements TalentService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<TalentDto> searchClientsByName(String query) {
-        List<Talent> talents = talentRepository.searchClientsByName(query);
-        // convert list of talent entities to talent dto
-        return talents.stream()
-                .map(TalentMapper::mapToTalentDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<TalentDto> searchClientsByLocation(String query) {
-        List<Talent> talents = talentRepository.searchClientsByLocation(query);
-        return talents.stream()
-                .map(TalentMapper::mapToTalentDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<TalentDto> searchClientsByTalent(String query) {
-        List<Talent> talents = talentRepository.searchClientsByTalent(query);
-        return talents.stream()
-                .map(TalentMapper::mapToTalentDto)
-                .collect(Collectors.toList());
-    }
 
 
 }

@@ -149,13 +149,7 @@ public class TalentController {
         return "talent/myclients";
     }
 
-    // Handler method to handle list requests method
-    @GetMapping("/talent/myclients/requests")
-    public String talentRequests(Model model){
-        List<RequestDto> requests = requestService.findAllRequests();
-        model.addAttribute("requests",requests);
-        return "talent/requests";
-    }
+
     // Handler method to handle list requests method
     @GetMapping("/talent/mytalents/requests")
     public String talentRequest(Model model){
@@ -171,13 +165,7 @@ public class TalentController {
         return "talent/requests";
     }
 
-    // Handler method to handle fulfill Talent service request
-    @GetMapping("/talent/myclients/requests/{requestId}")
-    public String fulfillRequest(@PathVariable("requestId") Long requestId, Model model){
-        Fulfill fulfill = requestService.fulfillRequest(requestId);
-        model.addAttribute("fulfill",fulfill);
-        return  "redirect:/talent/myclients/requests";
-    }
+
     // Handler method to handle fulfill Talent service request
     @GetMapping("/talent/mytalents/requests/{requestId}")
     public String fulfillRequestById(@PathVariable("requestId") Long requestId, Model model){

@@ -14,9 +14,6 @@ public interface TalentService {
     void updateClient(TalentDto talentDto);
     void deleteClient(Long clientId);
 
-    List<TalentDto> searchClientsByName(String query);
-    List<TalentDto> searchClientsByLocation(String query);
-    List<TalentDto> searchClientsByTalent(String query);
 
     TalentDto findTalentByUrl(String talentUrl);
 

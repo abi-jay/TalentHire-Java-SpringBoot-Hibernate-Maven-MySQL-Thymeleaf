@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface FulfillRepository extends JpaRepository<Fulfill, Long> {
+    // JPQL query to search Clients. JPQL uses entity and its fields, NOT table columns
     @Query("SELECT f FROM Fulfill f WHERE " +
             " f.name LIKE CONCAT('%', :query, '%')")
     List<Fulfill> searchClientsByName(String query);

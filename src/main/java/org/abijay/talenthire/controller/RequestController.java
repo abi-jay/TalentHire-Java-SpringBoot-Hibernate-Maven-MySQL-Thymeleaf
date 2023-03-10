@@ -29,7 +29,7 @@ public class RequestController {
     // @ModelAttribute will bind every form data to model object that is now available to the handler method below
     // whenever a review is added, redirect to show talent handler
     @PostMapping("/{talentUrl}/requests")
-    public String createReview(@PathVariable("talentUrl") String talentUrl,
+    public String createRequest(@PathVariable("talentUrl") String talentUrl,
                                @Valid @ModelAttribute("request") RequestDto requestDto,
                                BindingResult result,
                                Model model){
