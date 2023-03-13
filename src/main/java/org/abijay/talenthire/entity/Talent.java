@@ -1,3 +1,10 @@
+/**
+ *
+ * * Filename: Talent.java
+ * * 03/13/2023
+ * * @author Abhinaya Jayakumar
+ *
+ */
 package org.abijay.talenthire.entity;
 
 import lombok.*;
@@ -42,9 +49,12 @@ public class Talent {
     @JoinColumn(name = "created_by", nullable = false)
     private User createdBy;
 
-    // Many unique comments for a single table record
-    // Bidirectional mapping where Talent is the owning side of this relationship
-    // Whenever a talent record is deleted, hibernate should delete its requests as well
+    /**
+     *
+     * * Many unique comments for a single table record
+     * * Bidirectional mapping where Talent is the owning side of this relationship
+     * * Whenever a talent record is deleted, hibernate should delete its requests as well
+     */
     @OneToMany(mappedBy = "talent", cascade = CascadeType.REMOVE)
     private Set<Request> requests = new HashSet<>();
 

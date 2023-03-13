@@ -1,9 +1,17 @@
+/**
+ *
+ * * Filename: FulfillMapper.java
+ * * 03/13/2023
+ * * @author Abhinaya Jayakumar
+ *
+ */
 package org.abijay.talenthire.mapper;
 
 import org.abijay.talenthire.dto.FulfillDto;
 import org.abijay.talenthire.entity.Fulfill;
 
 public class FulfillMapper {
+    // Map fulfill entity to fulfill dto
     public static FulfillDto mapToFulfillDto(Fulfill fulfill){
         return FulfillDto.builder()
                 .id(fulfill.getId())
@@ -15,7 +23,7 @@ public class FulfillMapper {
                 .build();
 
     }
-    // Map review dto to review entity
+    // Map fulfill dto to fulfill entity
     public static Fulfill mapToFulfill(FulfillDto fulfillDto){
         return Fulfill.builder()
                 .id(fulfillDto.getId())

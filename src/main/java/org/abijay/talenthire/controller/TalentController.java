@@ -1,3 +1,10 @@
+/**
+ *
+ * * Filename: TalentController.java
+ * * 03/13/2023
+ * * @author Abhinaya Jayakumar
+ *
+ */
 package org.abijay.talenthire.controller;
 
 import org.abijay.talenthire.dto.FulfillDto;
@@ -64,9 +71,12 @@ public class TalentController {
         return "talent/new_talent";
     }
 
-    // Handler method to handle form submit POST request
-    // ModelAttribute annotation will read data from form and set the values to the fields of model object
-    // Binding result class is used to check the error and return it to the view
+    /**
+     *
+     * * Handler method to handle form submit POST request
+     * * ModelAttribute annotation will read data from form and set the values to the fields of model object
+     * * Binding result class is used to check the error and return it to the view
+     */
     @PostMapping("/talent/mytalents")
     public String createTalent(@Valid @ModelAttribute("talent") TalentDto talentDto,
                                BindingResult result,
@@ -107,17 +117,24 @@ public class TalentController {
         return "redirect:/talent/mytalents";
     }
 
-    // Handler method to handle client Delete request
-    // PathVariable annotation gets the clientId value from the url
-    // After deletion redirect to list of clients page
+    /**
+     *
+     * * Handler method to handle client Delete request
+     * * PathVariable annotation gets the clientId value from the url
+     * * After deletion redirect to list of clients page
+     */
     @GetMapping("/talent/myclients/{clientId}/delete")
     public String deleteClient(@PathVariable("clientId") Long clientId){
         fulfillService.deleteClient(clientId);
         return "redirect:/talent/myclients";
     }
-    // Handler method to handle Talent Delete request
-    // PathVariable annotation gets the talentId value from the url
-    // After deletion redirect to list of talents page
+
+    /**
+     *
+     * *  Handler method to handle Talent Delete request
+     * *  PathVariable annotation gets the talentId value from the url
+     * *  After deletion redirect to list of talents page
+     */
     @GetMapping("/talent/mytalents/{talentId}/delete")
     public String deleteTalent(@PathVariable("talentId") Long talentId){
         talentService.deleteTalent(talentId);
@@ -134,12 +151,15 @@ public class TalentController {
         return "talent/view_talent";
     }
 
-    // Handler method to handle search clients request
-    // url - localhost:8080/talent/myclients/search?query=Sirius
-    // RequestParam annotation to retrieve value from the Query parameter
-    // Handler method to handle search clients request
-    // url - localhost:8080/talent/myclients/searchbyname?query=Sirius
-    // RequestParam annotation to retrieve value from the Query parameter
+    /**
+     *
+     * *  Handler method to handle search clients request
+     * *  url - localhost:8080/talent/myclients/search?query=Sirius
+     * *  RequestParam annotation to retrieve value from the Query parameter
+     * *  Handler method to handle search clients request
+     * *  url - localhost:8080/talent/myclients/searchbyname?query=Sirius
+     * *  RequestParam annotation to retrieve value from the Query parameter
+     */
     @GetMapping("/talent/myclients/searchbyname")
     public String searchClientsByName(@RequestParam(value = "query") String query,
                                       Model model){

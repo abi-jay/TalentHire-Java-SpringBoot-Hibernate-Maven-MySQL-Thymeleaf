@@ -1,3 +1,10 @@
+/**
+ *
+ * * Filename: WebSpringSecurity.java
+ * * 03/13/2023
+ * * @author Abhinaya Jayakumar
+ *
+ */
 package org.abijay.talenthire.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +39,16 @@ public class WebSpringSecurity {
         return new BCryptPasswordEncoder();
     }
 
-    // define security filter chain bean
-    // authorizeHttpRequest method takes an implementation lambda expression
-    // access to all url that starts with /resources, /register
-    // form login authentication through formLogin method that takes an implementation of lambda expression
-    // once authenticated successfully, user is navigated to /talent/myclients by default
-    // loginProcessingUrl is the Spring default url
-    // filterchain method returns Security Filter Chain instance - through build method
+    /**
+     *
+     * * define security filter chain bean
+     * * authorizeHttpRequest method takes an implementation lambda expression
+     * * access to all url that starts with /resources, /register
+     * * form login authentication through formLogin method that takes an implementation of lambda expression
+     * * once authenticated successfully, user is navigated to /talent/myclients by default
+     * * loginProcessingUrl is the Spring default url
+     * * filterchain method returns Security Filter Chain instance - through build method
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         // csrf() is used mainly for banking transaction applications
@@ -61,10 +71,13 @@ public class WebSpringSecurity {
         return httpSecurity.build();
     }
 
-    // Set UserDetailsService and PasswordEncoder to authentication manager
-    // @Autowired to inject userDetailsService and passwordEncoder to authentication manager
-    // AuthenticationManagerBuilder internally uses userDetailsService to load the user object from the database and authenticate with database
-    // AuthenticationManagerBuilder internally uses passwordEncoder to encrypt password
+    /**
+     *
+     * * Set UserDetailsService and PasswordEncoder to authentication manager
+     * * @Autowired to inject userDetailsService and passwordEncoder to authentication manager
+     * * AuthenticationManagerBuilder internally uses userDetailsService to load the user object from the database and authenticate with database
+     * * AuthenticationManagerBuilder internally uses passwordEncoder to encrypt password
+     */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder builder) throws Exception {
         builder.userDetailsService(userDetailsService)

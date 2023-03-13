@@ -1,3 +1,10 @@
+/**
+ *
+ * * Filename: TalentService.java
+ * * 03/13/2023
+ * * @author Abhinaya Jayakumar
+ *
+ */
 package org.abijay.talenthire.service;
 
 import org.abijay.talenthire.dto.TalentDto;
@@ -6,7 +13,6 @@ import java.util.List;
 
 public interface TalentService {
     List<TalentDto> findAllTalents();
-
     List<TalentDto> findTalentsByUser();
     // method to create new client in database with the dto provided
     void createClient(TalentDto talentDto);
@@ -16,9 +22,7 @@ public interface TalentService {
 
 
     TalentDto findTalentByUrl(String talentUrl);
-
     List<TalentDto> searchTalents(String query);
-
     void createTalent(TalentDto talentDto);
     TalentDto findTalentById(Long talentId);
     void updateTalent(TalentDto talentDto);

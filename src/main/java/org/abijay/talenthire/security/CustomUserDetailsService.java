@@ -1,3 +1,10 @@
+/**
+ *
+ * * Filename: CustomerUserDetailsService.java
+ * * 03/13/2023
+ * * @author Abhinaya Jayakumar
+ *
+ */
 package org.abijay.talenthire.security;
 
 import org.abijay.talenthire.entity.User;

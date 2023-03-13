@@ -1,3 +1,10 @@
+/**
+ *
+ * * Filename: AuthController.java
+ * * 03/13/2023
+ * * @author Abhinaya Jayakumar
+ *
+ */
 package org.abijay.talenthire.controller;
 
 import org.abijay.talenthire.dto.RegistrationDto;

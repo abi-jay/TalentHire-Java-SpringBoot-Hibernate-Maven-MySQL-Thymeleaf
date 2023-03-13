@@ -1,3 +1,10 @@
+/**
+ *
+ * * Filename: RequestController.java
+ * * 03/13/2023
+ * * @author Abhinaya Jayakumar
+ *
+ */
 package org.abijay.talenthire.controller;
 
 import org.abijay.talenthire.dto.RequestDto;
@@ -25,9 +32,12 @@ public class RequestController {
         this.talentService = talentService;
     }
 
-    // handler method to handle create review form submit request
-    // @ModelAttribute will bind every form data to model object that is now available to the handler method below
-    // whenever a review is added, redirect to show talent handler
+    /**
+     *
+     * * handler method to handle create review form submit request
+     * * @ModelAttribute will bind every form data to model object that is now available to the handler method below
+     * * whenever a review is added, redirect to show talent handler
+     */
     @PostMapping("/{talentUrl}/requests")
     public String createRequest(@PathVariable("talentUrl") String talentUrl,
                                @Valid @ModelAttribute("request") RequestDto requestDto,

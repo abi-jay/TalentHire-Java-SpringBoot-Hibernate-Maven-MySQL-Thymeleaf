@@ -1,3 +1,10 @@
+/**
+ *
+ * * Filename: UserServiceImpl.java
+ * * 03/13/2023
+ * * @author Abhinaya Jayakumar
+ *
+ */
 package org.abijay.talenthire.service.impl;
 
 import org.abijay.talenthire.dto.RegistrationDto;
@@ -6,10 +13,12 @@ import org.abijay.talenthire.entity.User;
 import org.abijay.talenthire.repository.RoleRepository;
 import org.abijay.talenthire.repository.UserRepository;
 import org.abijay.talenthire.service.UserService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -42,7 +51,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User findByEmail(String email) throws UsernameNotFoundException {
+        try {
+            return userRepository.findByEmail(email);
+        } catch(NoSuchElementException e) {
+            throw new UsernameNotFoundException("Couldn't find any user with Email: " + email);
+        }
     }
 }
