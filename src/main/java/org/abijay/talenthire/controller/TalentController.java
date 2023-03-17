@@ -43,9 +43,18 @@ public class TalentController {
     // Handler method to handle HTTP GET request and return model and view
     @GetMapping("/talent/myclients")
     public String clients(Model model) {
-        List<FulfillDto> fulfills = fulfillService.findAllFulfills();
+        String role = SecurityUtils.getRole();
+        List<FulfillDto> fulfills = null;
+        if(ROLE.ROLE_ADMIN.name().equals(role)){
+            fulfills = fulfillService.findAllFulfills();
+        }
+        else{
+            fulfills = fulfillService.findFulfillsByTalent();
+        }
         model.addAttribute("fulfills", fulfills);
         return "/talent/myclients";
+
+
     }
     // Handler method to handle HTTP GET request and return model and view
     @GetMapping("/talent/mytalents")

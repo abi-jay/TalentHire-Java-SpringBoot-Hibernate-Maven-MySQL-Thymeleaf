@@ -16,4 +16,5 @@ public interface FulfillService {
     List<FulfillDto> findAllFulfills();
     void deleteClient(Long clientId);
     List<FulfillDto> searchClientsByName(String query);
+    List<FulfillDto> findFulfillsByTalent();
 }
